@@ -1,9 +1,19 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="3.1.221.178",
-  user="root",
-  password="4321"
-)
+db = mysql.connector.connect(
+    host="3.1.221.178",
+    database='training',
+    user="root",
+    password="4321"
+    )
 
-print(mydb)
+cursor = db.cursor()
+
+sql = "SELECT tweet FROM tweet"
+cursor.execute(sql)
+results = cursor.fetchall()
+
+tweet = list(results[0])
+print(tweet)
+
+db.close()
