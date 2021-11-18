@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 
+app = FastAPI()
+
 @app.get("/")
 def read_root():
-    return {"API": "Molog_WMS"}
+    return {"API-CPE3153": "Welcome"}
 
