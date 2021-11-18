@@ -9,7 +9,7 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-sql = "SELECT tweet FROM tweet"
+sql = "SELECT tweet FROM tweet WHERE tweet LIKE '%#run%'"
 cursor.execute(sql)
 results = cursor.fetchall()
 
