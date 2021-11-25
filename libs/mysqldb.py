@@ -1,19 +1,19 @@
+
+from libs.setting import MYSQL_HOST, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD
 import mysql.connector
 
-db = mysql.connector.connect(
-    host="3.1.221.178",
-    database='training',
-    user="root",
-    password="4321"
-    )
 
-cursor = db.cursor()
+def mysql_connect(sql):
+    db = mysql.connector.connect(
+            host = MYSQL_HOST,
+            database = MYSQL_DATABASE,
+            user = MYSQL_USER,
+            password = MYSQL_PASSWORD,
+        )
 
-sql = "SELECT tweet FROM tweet WHERE tweet LIKE '%#run%'"
-cursor.execute(sql)
-results = cursor.fetchall()
+    cursor = db.cursor()
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    db.close()
+    return results
 
-tweet = list(results[0])
-print(tweet)
-
-db.close()

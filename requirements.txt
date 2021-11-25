@@ -4,3 +4,5 @@ pydantic
 requests
 python-dotenv
 mysql-connector-python
+fastapi-redis-cache
+SQLAlchemy
