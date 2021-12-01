@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi_redis_cache import FastApiRedisCache, cache, cache_one_day
 from sqlalchemy.orm import Session
 from libs.setting import LOCAL_REDIS_URL
+
 import os
 
 app = FastAPI(title="CPE3151-Group7")
