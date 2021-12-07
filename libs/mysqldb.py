@@ -23,24 +23,26 @@ def mysql_connect():
     return results
 
 
-def search_database(search):
+def search_database(input):
+    input_list = re.sub("@", " ",  input).split() 
+
     res = mysql_connect()
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    
-    result = []
 
-    for query in res:
-        text = query[0]
-        words1 = re.sub("[^\w]", " ",  text).split() 
-        for str in words1:
-            if str == search:
-                result.append(query)
-
-    data = pickle.dumps(result)
+    data = pickle.dumps(res)
     r.set("data", data)
     result_redis = pickle.loads(r.get("data"))
 
-    return result_redis
+    result = []
+    for word in input_list:
+        for query in result_redis:
+            text = query[0]
+            words1 = re.sub("@", " ",  text).split() 
+            for str in words1:
+                if str == word:
+                    result.append(query)
+
+    return result
 
 
 def str_on_page(res):
