@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>search</title>
+        <link rel="stylesheet" href="static/styles.css"/>
+    </head>
+    <body>
+        
+        <form action="/search" class="search-bar" method='post'>
+            <input type="search" id="str_fill" name="str_fill" placeholder="search...">
+            <button class="search-btn" type="submit" value="submit">
+                <span>Search</span>
+            </button>
+        </form>
+
+
+        <form action="/search" class="search-bar" method='get'>
+            <div class="result">
+                <tr>
+                    {% for items in result %}
+                        <br/><br/>
+                        <td>{{ items }}</td>
+                    {% endfor %}
+                </tr>
+            </div>
+        </form>
+
+    </body>
+</html>
+

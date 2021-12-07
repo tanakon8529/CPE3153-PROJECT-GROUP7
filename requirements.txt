@@ -4,5 +4,6 @@ pydantic
 requests
 python-dotenv
 mysql-connector-python
-fastapi-redis-cache
-SQLAlchemy
+jinja2
+python-multipart
+redis
