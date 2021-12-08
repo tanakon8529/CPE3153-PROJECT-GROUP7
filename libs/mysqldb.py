@@ -5,6 +5,12 @@ import redis
 import re
 import pickle
 
+def delete_cache():
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    for key in r.scan_iter("data"):
+        r.delete(key)
+
+    return print("{delete:success}")
 
 def mysql_connect():
     db = mysql.connector.connect(
