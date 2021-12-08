@@ -23,24 +23,50 @@ def mysql_connect():
     return results
 
 
-def search_database(input):
+def split_words(input):
     input_list = re.sub("@", " ",  input).split() 
+    return input_list
 
-    res = mysql_connect()
-    r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-    data = pickle.dumps(res)
-    r.set("data", data)
-    result_redis = pickle.loads(r.get("data"))
+def sentence_query(input, result):
+    result_currect = []
+    for sentence in result:
+        split_st = set(split_words(sentence[0]))
+        split_ip = set(split_words(input))
+        result = split_st.intersection(split_ip)
+        if len(result) == 3:
+            result_currect.append(sentence)
 
-    result = []
-    for word in input_list:
-        for query in result_redis:
+    return result_currect
+
+def word_query(input, data):
+    word_current = []
+    for word in input:
+        for query in data:
             text = query[0]
             words1 = re.sub("@", " ",  text).split() 
             for str in words1:
                 if str == word:
-                    result.append(query)
+                    word_current.append(query)
+    
+    return word_current
+
+def search_database(input):
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+    try:
+        res = mysql_connect()
+        data = pickle.dumps(res)
+        r.set("data", data)
+        result_redis = pickle.loads(r.get("data"))
+    except:
+        result_redis = pickle.loads(r.get("data"))
+
+    input_list = split_words(input)
+    if len(input_list) > 1:
+        result = sentence_query(input, result_redis)
+    else:
+        result = word_query(input, result_redis)
 
     return result
 
