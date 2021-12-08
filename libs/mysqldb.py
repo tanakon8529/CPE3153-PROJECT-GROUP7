@@ -28,16 +28,37 @@ def split_words(input):
     return input_list
 
 
+def intersection(lst1, lst2):
+    lst3 = [value for value in lst1 if value in lst2]
+    return lst3
+
+
 def sentence_query(input, result):
+    # result_currect = []
+    # for sentence in result:
+    #     split_st = set(split_words(sentence[0]))
+    #     split_ip = set(split_words(input))
+    #     result_compare = split_ip.intersection(split_st)
+    #     if len(result_compare) > 2:
+    #         result_currect.append(sentence)
+
     result_currect = []
     for sentence in result:
-        split_st = set(split_words(sentence[0]))
-        split_ip = set(split_words(input))
-        result = split_st.intersection(split_ip)
-        if len(result) == 3:
+        split_st = split_words(sentence[0])
+        split_ip = split_words(input)
+        result_compare = intersection(split_st, split_ip)
+        if len(result_compare) > 3:
             result_currect.append(sentence)
 
+    for sentence in result:
+        split_st = split_words(sentence[0])
+        split_ip = split_words(input)
+        result_compare = intersection(split_st, split_ip)
+        if len(result_compare) == 2:
+            result_currect.append(sentence)
+    
     return result_currect
+
 
 def word_query(input, data):
     word_current = []
@@ -49,6 +70,7 @@ def word_query(input, data):
                 word_current.append(query)
     
     return word_current
+
 
 def search_database(input):
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
