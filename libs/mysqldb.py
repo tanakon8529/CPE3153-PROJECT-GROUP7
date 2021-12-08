@@ -41,13 +41,12 @@ def sentence_query(input, result):
 
 def word_query(input, data):
     word_current = []
-    for word in input:
-        for query in data:
-            text = query[0]
-            words1 = re.sub("@", " ",  text).split() 
-            for str in words1:
-                if str == word:
-                    word_current.append(query)
+    for query in data:
+        text = query[0]
+        words1 = re.sub("@", " ",  text).split() 
+        for str in words1:
+            if str == input:
+                word_current.append(query)
     
     return word_current
 
